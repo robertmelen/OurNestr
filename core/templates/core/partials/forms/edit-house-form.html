@@ -1,0 +1,27 @@
+{% load widget_tweaks %}
+<form hx-put="{% url 'edit_house' pk=house.pk %}">
+    <div class="flex flex-col gap-3 bg-white shadow-2xl rounded px-8 pt-6 pb-8 mt-15 mb-4">
+        {% csrf_token %}
+        <label class="text-sm" for="id_name">Name</label>
+        {% render_field form.name placeholder="Name" class="input input-bordered w-full max-w-xs"%}
+        <label class="text-sm" for="id_postcode">Postcode</label>
+        {% render_field form.postcode placeholder="Postcode" class="input input-bordered w-full max-w-xs"%}
+        <label class="text-sm" for="id_description">Description</label>
+        {% render_field form.description placeholder="Description" class="input input-bordered w-full max-w-xs"%}
+        <label class="text-sm" for="id_status">Status</label>
+        {% render_field form.status placeholder="Status" class="select select-ghost w-full max-w-xs"%}
+        <label class="text-sm" for="id_image">Image</label>
+        {% render_field form.image placeholder="Image" class="file-input file-input-bordered file-input-accent w-full max-w-xs"%}
+        <label class="text-sm" for="id_link">Link</label>
+        {% render_field form.link placeholder="Link" class="input input-bordered w-full max-w-xs"%}
+        <div class="flex">
+            <input type="submit" value="Submit" class="btn btn-primary" />
+            <a href="" hx-boost="true">
+                <button class="btn btn-circle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                  </button>
+                </a>
+        </div>
+    </div>
+</form>
+

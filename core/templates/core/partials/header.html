@@ -1,0 +1,18 @@
+<div class="navbar  bg-yellow-400">
+    <div class="flex-1 flex-wrap">
+      <a _="on mouseover toggle .skew-y-6 then on mouseleave toggle .skew-y-6" href="/" hx-boost="true" class="btn btn-ghost text-xl">OurNestr</a>
+      <div class="text-xs sm:text-sm font-thin">House searching organised....</div>
+    </div>
+    <div class="flex-wrap">
+      <ul class="menu menu-horizontal px-1">
+        {% if user.is_authenticated %}
+        <li><a hx-boost="true" href="{% url 'dashboard' %}">My dashboard</a></li>
+        <li><a hx-boost="true" href="{% url 'custom_logout' %}">Logout</a></li>
+        {% else %}
+        <li><a hx-boost="true" href="{% url 'account_login' %}">Login</a></li>
+        <li><a hx-boost="true" href="{% url 'account_signup' %}">Register</a></li>
+        {% endif %}
+        
+      </ul>
+    </div>
+  </div>

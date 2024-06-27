@@ -1,0 +1,46 @@
+{% extends 'core/base.html' %}
+{% load widget_tweaks %}
+{% block content %}
+<div class="flex flex-col h-screen overscroll-auto">
+    <div>{% include 'core/partials/header.html' %}</div>
+    <div class="flex-grow flex justify-center gap-2 bg-slate-200">
+
+        <div class="flex flex-col">
+            <div class="text-7xl mt-10 text-orange-800">
+                Sure!
+            </div>
+            <div class="text-black">
+                Let's get organized, just use the form below to register.
+            </div>
+            <div class="flex flex-col gap-6 mt-20">
+                <form method="post" action="{% url 'account_signup' %}">
+                    {% csrf_token %}
+                    {{ form.non_field_errors }}
+                    
+                    <div class="mb-4">
+                        {{ form.username|add_class:"form-input mt-1 block w-full" }}
+                        {{ form.username.errors }}
+                    </div>
+                    
+                    <div class="mb-4">
+                        {{ form.email|add_class:"form-input mt-1 block w-full" }}
+                        {{ form.email.errors }}
+                    </div>
+                    
+                    <div class="mb-4">
+                        {{ form.password1|add_class:"form-input mt-1 block w-full" }}
+                        {{ form.password1.errors }}
+                    </div>
+                    
+                    <div class="mb-4">
+                        {{ form.password2|add_class:"form-input mt-1 block w-full" }}
+                        {{ form.password2.errors }}
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Sign Up</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<div>{% include 'core/partials/header.html' %}</div>
+<div id="dash-wrapper" class="flex flex-col md:flex-row w-screen pt-10">
+    <div class="w-full sm:w-1/2">
+        <div id="house-form" class="flex flex-col items-center sm:flex-row flex-wrap sm:justify-center gap-2">
+            <div class="text-4xl">Houses</div>
+                <button hx-get="{% url 'houseform' %}"
+                        hx-target="#form-section"
+                class=" bg-purple-500 hover:bg-purple-400
+                text-white font-bold py-2 px-4 rounded w-1/2 sm:w-auto">
+                    add house
+                </button>
+                {% if houses %}
+                <button _="
+                on click toggle .invisible on .checkbox 
+                    if #checkboxes does not match .invisible 
+                    set my.innerText to 'cancel' 
+                 else 
+                    set my.innerText to 'Delete' end"
+                id="btn-delete"
+                hx-target="#form-section"
+                class=" bg-purple-500 hover:bg-purple-400
+                text-white font-bold py-2 px-4 rounded w-1/2 sm:w-auto .test">
+                    Delete 
+                </button>
+                <div class="flex">
+                
+                   <select name="status" hx-trigger="change" hx-get="{% url 'house_filter' %}" hx-target="#houselist">
+                    <option value="all">All</option>
+                    {% for key, value in status %}
+                    <option name="status" value="{{key}}">{{ value }}</option>
+                    {% endfor %}
+                    </select>
+                
+                </div>
+                
+                {% endif %}
+                <form>
+            </form>
+        </div>
+        <div id="houselist">{% include 'core/htmx-partials/house-list.html' %}</div>
+    </div>
+    <div id="form-section" class="flex justify-center w-full sm:w-1/2 p-10 h-full order-first sm:order-last">
+        <div class="flex flex-col items-center">
+            <div class="text-2xl text-purple-800">Welcome to OurNesr, track your house buying!</div>
+            <div class="p-2 w-96">OurNestr is a proof of concept application is built upon a Django backend,
+                with HTMX and Hyperscript.
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

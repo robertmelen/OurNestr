@@ -1,0 +1,86 @@
+<div id="house-wrapper" class="flex flex-col items-center sm:pt-10">
+    <form>
+        {% if houses %}
+            {% for house in houses %}
+            <div class="grid grid-cols-1 sm:grid-cols-2 p-2">
+            <div class="flex flex-col sm:flex-row sm:justify-center items-center">
+                <div id="house-item" class="flex flex-col">
+                    <button _=""
+                            id="delete-button"
+                            hx-target="#house-wrapper"
+                            hx-post="{% url 'delete_house' %}"
+                            class="bg-red-500 m-2 hover:bg-red-700 
+                                text-white font-bold py-2 px-4 rounded invisible">
+                                    confirm
+                    </button>
+                    <input id="checkboxes" 
+                            _="init on load set my @checked to False" 
+                            type="checkbox" checked="checked" 
+                            data-house-pk="{{ house.pk }}"
+                            name = "house_check_id"
+                            value="{{ house.pk }}"
+                            class="checkbox invisible"  
+                            onchange="houseSelectionChanged()" />
+                </div>
+                <div>
+                    <p class="text-2xl font-thin text-purple-500">{{ house.name|capfirst }}</p>
+                    <p class="text-sm">{{ house.description|capfirst }}</p>
+                    <p class="badge badge-accent">{{ house.status }}</p>
+                        {% if house.postcode %}
+                    <p class="text-xs">{{ house.postcode }}</p>
+                    
+                        {% endif %}
+                    <p class="text-sm">Added: {{ house.date }}</p>
+                    <p class="text-sm">
+                                {% if house.link %}
+                            <a href="{{ house.link|safe }}">{{ house.link|truncatechars:15 }}</a>
+                            {% endif %}
+                            </p>
+                        <span hx-get="{% url 'edit_house' pk=house.pk %}"
+                            hx-target="#form-section" class="underline text-purple-500"
+                            >Edit</span>
+                        </div> 
+                    </div>
+                    <div>
+                    {% for image in house.images.all %}
+                    {% if image.image %}
+                <img class="sm:min-w-60 max-w-72 rounded-lg shadow-xl" src="{{ image.image.url }}">
+                    {% else %}
+                <img class="sm:min-w-60 max-w-72 rounded-lg shadow-xl" src="{{ image.sample_image.url }}">
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+          <div>
+            No houses
+          </div>
+        {% endif %}
+    </form>
+</div>
+<script>
+    function houseSelectionChanged() {
+        var checkboxes = document.querySelectorAll('.checkbox');
+        var deleteButton = document.getElementById('delete-button');
+        var checkedCount = 0;
+
+        checkboxes.forEach(function(checkbox) {
+            if (checkbox.checked) {
+                checkedCount++;
+            }
+        });
+
+        if (checkedCount > 0) {
+            deleteButton.classList.remove('invisible');
+        } else {
+            deleteButton.classList.add('invisible');
+        }
+    }
+</script>
+
+
+
+
+
+
